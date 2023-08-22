@@ -4,8 +4,8 @@
 <mapper namespace="com.project.poinhanshin.mapper.login.UserDao">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.project.poinhanshin.domain.etc.User">
-        insert into user(login_id, password, name, birth)
-        values (#{loginId}, #{password}, #{name}, #{birth});
+        insert into user(login_id, password, name, age, phnum, mail, address)
+        values (#{loginId}, #{password}, #{name}, #{age}, #{phnum}, #{mail}, #{address});
     </insert>
 
     <select id="findByLoginId" parameterType="com.project.poinhanshin.domain.etc.User" resultType="com.project.poinhanshin.domain.etc.User">

@@ -19,6 +19,16 @@ public class User {
     @NotEmpty(message = "필수 값입니다.")
     private String name;
 
-    @NotEmpty(message = "필수 값입니다.")
-    private String birth;
+    @NotEmpty(message = "필수 값입니다")
+    private Integer age;
+
+    @NotEmpty(message = "필수 값입니다")
+    private Integer phnum;
+
+    @NotEmpty(message = "필수 값입니다")
+    private String mail;
+
+    @NotEmpty(message = "필수 값입니다")
+    private String address;
+
 }
