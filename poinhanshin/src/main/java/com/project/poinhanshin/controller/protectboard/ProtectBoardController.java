@@ -48,8 +48,8 @@ public class ProtectBoardController {
         String LoginId = "하리보";
 
         ProtectBoardDto protectBoardDto = protectBoardService.bringBoardOne(protectboardno);
-        System.out.println(protectBoardDto.getProtectboard_id());
-        if(LoginId.equals(protectBoardDto.getProtectboard_id()))
+        System.out.println(protectBoardDto.getProtectboard_userno());
+        if(LoginId.equals(protectBoardDto.getProtectboard_userno()))
             m.addAttribute("Mode", "WRITER");
 
         m.addAttribute("protectDto" , protectBoardDto);
