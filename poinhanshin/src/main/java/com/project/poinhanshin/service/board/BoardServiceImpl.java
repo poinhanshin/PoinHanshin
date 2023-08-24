@@ -2,6 +2,10 @@ package com.project.poinhanshin.service.board;
 
 import com.project.poinhanshin.domain.board.BoardDto;
 import com.project.poinhanshin.domain.board.LikeBoardDto;
+<<<<<<< HEAD
+=======
+
+>>>>>>> maintest
 import com.project.poinhanshin.domain.etc.SearchCondition;
 import com.project.poinhanshin.mapper.board.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
