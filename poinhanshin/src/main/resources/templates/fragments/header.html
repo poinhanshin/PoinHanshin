@@ -45,19 +45,23 @@
                     </ul>
                     <ul class="nav nav-pills">
 
-                        <li class="nav-item" th:if="${session.isEmpty()}">
-                            <a class="nav-link" href="/members/add" aria-current="page">회원가입</a>
-                        </li>
-                        <li class="nav-item"th:if="${session.isEmpty()}">
-                            <a class="nav-link" href="/login" aria-current="page">로그인</a>
-                        </li>
+                        <th:block th:if="${loginUser==null}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/register" aria-current="page">회원가입</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login" aria-current="page">로그인</a>
+                            </li>
+                        </th:block>
 
-                        <li class="nav-item" th:unless="${session.isEmpty()}">
-                            <a class="nav-link" href="/" aria-current="page">내정보</a>
-                        </li>
-                        <li class="nav-item" th:unless="${session.isEmpty()}">
-                            <a class="nav-link" href="/" aria-current="page">로그아웃</a>
-                        </li>
+                        <th:block th:if="${loginUser!=null}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/myPage" aria-current="page" th:text="|${loginUser.name}님|">내정보</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout" aria-current="page">로그아웃</a>
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </div>
