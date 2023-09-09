@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body layout:fragment="content">
+<div id="content">
+  <h2 class="writing-header">게시물 읽기</h2>
+  <form action="" id="form" class="frm" th:object="${boardDto}">
+    <input type="hidden" th:field="*{bno}" readonly>
+    <input type="hidden" th:field="*{writer}" readonly>
+    <input type="text" th:field="*{title}" readonly>
+    <textarea th:field="*{content}" cols="30" rows="10" readonly></textarea>
+    <button type="button" id="modifyBtn" class="btn">수정</button>
+    <button type="button" id="removeBtn" class="btn">삭제</button>
+    <button type="button" id="listBtn" class="btn">목록</button>
+  </form>
+</div>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+    document.addEventListener("DOMContentLoaded", function() {
+      const listBtn = document.getElementById("listBtn");
+      listBtn.addEventListener("click", function() {
+        location.href = /*[[@{/board/list}]]*/;
+      });
+
+      const removeBtn = document.getElementById("removeBtn");
+      removeBtn.addEventListener("click", function() {
+        if(!confirm("정말로 삭제하시겠습니까?")) return;
+        const form = document.getElementById("form");
+        form.setAttribute("action", /*[[@{/board/remove(page=${page}, pageSize=${pageSize})}]]*/);
+        form.setAttribute("method", "post");
+        form.submit();
+      });
+
+      const modifyBtn = document.getElementById("modifyBtn");
+      modifyBtn.addEventListener("click", function() {
+        location.href = /*[[@{/board/modify(bno=${boardDto.bno})}]]*/;
+      });
+    });
+  /*]]>*/
+</script>
+</body>
+</html>

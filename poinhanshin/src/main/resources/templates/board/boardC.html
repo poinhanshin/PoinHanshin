@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body layout:fragment="content">
+<div id="content">
+  <h2 class="writing-header">게시물 작성</h2>
+  <form action="" id="form" class="frm" th:object="${boardDto}">
+    <input type="hidden" th:field="*{bno}" readonly>
+    <input type="text" th:field="*{title}">
+    <textarea th:field="*{content}" cols="30" rows="10"></textarea>
+    <button type="button" id="writeBtn" class="btn" th:onclick="|location.href='@{/}'|">등록</button>
+    <button type="button" id="listBtn" class="btn">취소</button>
+  </form>
+</div>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  document.addEventListener("DOMContentLoaded", function () {
+    const writeBtn = document.getElementById("writeBtn");
+    writeBtn.addEventListener("click", function() {
+      const form = document.getElementById("form");
+      form.setAttribute("action", /*[[@{/board/write}]]*/);
+      form.setAttribute("method", "post");
+      form.submit();
+    });
+
+    const listBtn = document.getElementById("listBtn");
+    listBtn.addEventListener("click", function() {
+      location.href= /*[[@{/board/list}]]*/;
+    })
+  });
+  /*]]>*/
+</script>
+</body>
+</html>
