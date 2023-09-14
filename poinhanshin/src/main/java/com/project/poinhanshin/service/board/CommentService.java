@@ -1,23 +1,25 @@
 package com.project.poinhanshin.service.board;
 
-
 import com.project.poinhanshin.domain.board.CommentDto;
-import org.springframework.transaction.annotation.Transactional;
+import com.project.poinhanshin.mapper.board.CommentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface CommentService {
-    int getCount(Integer bno) throws Exception;
+@Service
+public class CommentService {
+    private final CommentMapper commentMapper;
+    @Autowired
+    public CommentService(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
 
-    @Transactional(rollbackFor = Exception.class)
-    int remove(Integer cno, Integer bno, String commenter) throws Exception;
+    public void addComment(CommentDto commentDto) {
+        commentMapper.insertComment(commentDto);
+    }
 
-    @Transactional(rollbackFor = Exception.class)
-    int write(CommentDto commentDto) throws Exception;
-
-    List<CommentDto> getList(Integer bno) throws Exception;
-
-    CommentDto read(Integer cno) throws Exception;
-
-    int modify(CommentDto commentDto) throws Exception;
+    public List<CommentDto> getComments() {
+        return commentMapper.getComments();
+    }
 }

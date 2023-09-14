@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <title>게시판</title>
     <link rel="stylesheet" th:href="@{/css/board.css}">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body layout:fragment="content">
-<div id="content">
+<div id="content1">
   <h2 class="writing-header">게시물 읽기</h2>
   <form action="" id="form" class="frm" th:object="${boardDto}">
     <input type="hidden" th:field="*{bno}" readonly>
@@ -20,6 +21,99 @@
     <button type="button" id="listBtn" class="btn">목록</button>
   </form>
 </div>
+<div id="commentList">
+    <!-- 댓글 목록이 여기에 동적으로 추가될 것입니다. -->
+</div>
+<form id="commentForm">
+    <input type="hidden" id="bno" th:value="${boardDto.bno}">
+    <input type="hidden" id="writer" th:value="${boardDto.writer}">
+    <input type="text" name="comment" id="comment" placeholder="댓글을 입력하세요">
+    <button type="button" id="submitComment">댓글 등록</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#submitComment").click(function() {
+            var bno = $("#bno").val();
+            var writer = $("#writer").val()
+            var content = $("#comment").val();
+            var comment = { "bno": bno,
+                            "writer" : writer,
+                            "content": content };
+
+            $.ajax({
+                url: "/addComment",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(comment),
+                success: function(response) {
+                    if (response === "success") {
+                        // 댓글 등록 성공 시 처리
+                        alert("댓글이 등록되었습니다.");
+                        // 페이지 새로고침 또는 댓글 목록 갱신
+                    } else {
+                        alert("댓글 등록에 실패했습니다.");
+                    }
+                }
+            });
+        });
+    });
+
+    // 댓글 목록을 가져오는 함수
+    function fetchComments() {
+        $.ajax({
+            url: "/getComments",
+            type: "GET",
+            dataType: "json",
+            success: function(comments) {
+                // 댓글 목록을 표시할 요소를 가져옴
+                var commentList = $("#commentList");
+
+                // 댓글 목록을 초기화
+                commentList.empty();
+
+                // 댓글 목록을 반복하여 화면에 추가
+                comments.forEach(function(comment) {
+                    var commentHtml = `
+                    <div class="comment">
+                        <p>${comment.content}</p>
+                    </div>
+                `;
+                    commentList.append(commentHtml);
+                });
+            }
+        });
+    }
+
+    // 페이지 로드 시 댓글 목록을 가져옴
+    $(document).ready(function() {
+        fetchComments();
+    });
+
+    function addCommentAndRefresh() {
+        var content = $("#content").val();
+        var comment = { "content": content };
+
+        $.ajax({
+            url: "/addComment",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(comment),
+            success: function(response) {
+                if (response === "success") {
+                    // 댓글 등록 성공 시 댓글 목록을 업데이트
+                    fetchComments();
+                    $("#content").val(""); // 입력 필드 초기화
+                } else {
+                    alert("댓글 등록에 실패했습니다.");
+                }
+            }
+        });
+    }
+</script>
+
 <script th:inline="javascript">
   /*<![CDATA[*/
     document.addEventListener("DOMContentLoaded", function() {

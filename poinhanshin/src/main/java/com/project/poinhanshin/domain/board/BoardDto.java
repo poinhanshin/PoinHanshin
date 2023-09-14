@@ -22,6 +22,7 @@ public class BoardDto {
     private int comment_cnt;
     private Date reg_date;
 
+
     SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
 
     public Integer getBno() {

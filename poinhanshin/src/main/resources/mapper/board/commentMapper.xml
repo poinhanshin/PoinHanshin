@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.poinhanshin.mapper.board.CommentMapper">
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="id" parameterType="com.project.poinhanshin.domain.board.CommentDto">
+        insert into comment (bno, writer, content)
+        values (#{bno}, #{writer}, #{content});
+    </insert>
+
+    <select id="getComments" resultType="com.project.poinhanshin.domain.board.CommentDto">
+        SELECT id, content FROM comment
+    </select>
+</mapper>

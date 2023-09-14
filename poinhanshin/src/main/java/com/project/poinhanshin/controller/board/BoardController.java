@@ -1,6 +1,7 @@
 package com.project.poinhanshin.controller.board;
 
 import com.project.poinhanshin.domain.board.BoardDto;
+import com.project.poinhanshin.domain.board.CommentDto;
 import com.project.poinhanshin.domain.etc.PageHandler;
 import com.project.poinhanshin.domain.etc.SearchCondition;
 import com.project.poinhanshin.domain.member.User;
@@ -66,12 +67,13 @@ public class BoardController {
 
     @GetMapping("/read")
     public String read(Integer bno, Integer page, Integer pageSize, Model model,
-                       @SessionAttribute(name = "loginUser", required = false) User loginUser) {
+                       @SessionAttribute(name = "loginUser", required = false) User loginUser, CommentDto commentDto) {
         BoardDto boardDto = boardService.read(bno);
         model.addAttribute("user", loginUser);
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
+        model.addAttribute("commentDto", commentDto);
         return "board/boardR";
     }
 
