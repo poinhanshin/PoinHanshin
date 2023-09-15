@@ -30,7 +30,7 @@ public class BoardController {
 
     @GetMapping("/list")
     public String board(@SessionAttribute(name = "loginUser", required = false) User loginUser, Model model, Integer page, Integer pageSize, SearchCondition sc) {
-        model.addAttribute("user", loginUser);
+        model.addAttribute("loginUser", loginUser);
 
         if (page==null) page=1;
         if (pageSize==null) pageSize=50;
@@ -69,7 +69,7 @@ public class BoardController {
     public String read(Integer bno, Integer page, Integer pageSize, Model model,
                        @SessionAttribute(name = "loginUser", required = false) User loginUser, CommentDto commentDto) {
         BoardDto boardDto = boardService.read(bno);
-        model.addAttribute("user", loginUser);
+        model.addAttribute("loginUser", loginUser);
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);

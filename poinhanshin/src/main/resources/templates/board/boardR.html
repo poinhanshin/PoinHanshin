@@ -26,7 +26,7 @@
 </div>
 <form id="commentForm">
     <input type="hidden" id="bno" th:value="${boardDto.bno}">
-    <input type="hidden" id="writer" th:value="${boardDto.writer}">
+    <input type="hidden" id="writer" value="익명 사용자">
     <textarea class="comment" name="comment" id="comment" cols="30" rows="6" placeholder="댓글을 입력하세요"></textarea>
     <button type="button" id="submitComment">댓글 등록</button>
 </form>
@@ -80,7 +80,7 @@
                     <div class="commentCreate">
                         <table>
                             <tr>
-                                <td>${comment.writer}</td><td>${comment.content}</td>
+                                <td style="width: 150px">익명 사용자</td><td>${comment.content}</td>
                             </tr>
                         </table>
 
