@@ -130,11 +130,11 @@ li a:active {
     color: black;
 }
 
-#content1 {
+#content {
     width: 100%;
 }
 
-#content1 img {
+#content img {
     width: 100%;
 }
 
@@ -161,7 +161,7 @@ form input {
     outline-color: #e6e6e6;
 }
 
-textarea {
+.content {
     height: 1000px;
     background: #f8f8f8;
     margin: 5px 0px 10px 0px;

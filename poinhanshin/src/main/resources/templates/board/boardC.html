@@ -13,7 +13,7 @@
   <form action="" id="form" class="frm" th:object="${boardDto}" method="post">
     <input type="hidden" th:field="*{bno}" readonly>
     <input type="text" th:field="*{title}">
-    <textarea th:field="*{content}" cols="30" rows="10"></textarea>
+    <textarea class="content" th:field="*{content}" cols="30" rows="10"></textarea>
     <button type="button" id="writeBtn" class="btn" th:onclick="|location.href='@{/}'|">등록</button>
     <button type="button" id="listBtn" class="btn">취소</button>
   </form>
