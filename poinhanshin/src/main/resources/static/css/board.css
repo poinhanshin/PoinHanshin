@@ -188,3 +188,26 @@ form input {
 .btn:hover {
     text-decoration: underline;
 }
+
+#commentForm {
+    display: block;
+    width: 70%;
+    margin: 0 auto 3em;
+}
+
+.comment {
+    width: 100%;
+    resize: none;
+}
+
+#submitComment {
+    background-color: #000077;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.7em;
+}
+
+#submitComment:active {
+    background-color: #1b5ac2;
+}
