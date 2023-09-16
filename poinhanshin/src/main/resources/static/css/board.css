@@ -221,4 +221,5 @@ form input {
 
 .commentCreate:last-child {
     border-bottom: 1px solid grey;
+    padding-bottom: 1em;
 }

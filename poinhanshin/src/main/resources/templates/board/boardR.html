@@ -26,7 +26,8 @@
 </div>
 <form id="commentForm">
     <input type="hidden" id="bno" th:value="${boardDto.bno}">
-    <input type="hidden" id="writer" value="익명 사용자">
+    <input type="hidden" th:if="${loginUser!=null}" th:id="commenter" th:value="${loginUser.name}">
+    <input type="hidden" th:unless="${loginUser!=null}" th:id="commenter" th:value="'익명 사용자'">
     <textarea class="comment" name="comment" id="comment" cols="30" rows="6" placeholder="댓글을 입력하세요"></textarea>
     <button type="button" id="submitComment">댓글 등록</button>
 </form>
@@ -37,11 +38,13 @@
     $(document).ready(function() {
         $("#submitComment").click(function() {
             var bno = $("#bno").val();
-            var writer = $("#writer").val()
+            var commenter = $("#commenter").val()
             var content = $("#comment").val();
+            var reg_date = "";
             var comment = { "bno": bno,
-                            "writer" : writer,
-                            "content": content };
+                            "commenter" : commenter,
+                            "content": content,
+                            "reg_date": reg_date};
 
             $.ajax({
                 url: "/addComment",
@@ -80,7 +83,7 @@
                     <div class="commentCreate">
                         <table>
                             <tr>
-                                <td style="width: 150px">익명 사용자</td><td>${comment.content}</td>
+                                <td style="width: 150px">${comment.commenter}</td><td style="width: 1000px">${comment.content}</td><td>${comment.reg_date}</td>
                             </tr>
                         </table>
 

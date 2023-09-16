@@ -21,7 +21,7 @@ public class CommentController {
 
     @PostMapping("/addComment")
     @ResponseBody
-    public String addComment(@SessionAttribute(name = "loginUser", required = false) User loginUser, @RequestBody CommentDto commentDto) {
+    public String addComment( @RequestBody CommentDto commentDto) {
 
         commentService.addComment(commentDto);
         return "success";
