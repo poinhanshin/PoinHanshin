@@ -2,7 +2,10 @@ package com.project.poinhanshin.domain.board;
 
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,9 +18,10 @@ public class BoardDto {
     private String title;
     private String content;
     private String writer;
-    private int viewCnt;
-    private int commentCnt;
-    private Date regDate;
+    private int view_cnt;
+    private int comment_cnt;
+    private Date reg_date;
+
 
     SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
 
@@ -53,28 +57,28 @@ public class BoardDto {
         this.writer = writer;
     }
 
-    public int getViewCnt() {
-        return viewCnt;
+    public int getView_cnt() {
+        return view_cnt;
     }
 
-    public void setViewCnt(int viewCnt) {
-        this.viewCnt = viewCnt;
+    public void setView_cnt(int view_cnt) {
+        this.view_cnt = view_cnt;
     }
 
-    public int getCommentCnt() {
-        return commentCnt;
+    public int getComment_cnt() {
+        return comment_cnt;
     }
 
-    public void setCommentCnt(int commentCnt) {
-        this.commentCnt = commentCnt;
+    public void setComment_cnt(int comment_cnt) {
+        this.comment_cnt = comment_cnt;
     }
 
-    public String getRegDate() {
-        return sdf.format(regDate);
+    public String getReg_date() {
+        return sdf.format(reg_date);
     }
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
+    public void setReg_date(Date reg_date) {
+        this.reg_date = reg_date;
     }
 
     public BoardDto(){}
@@ -84,7 +88,4 @@ public class BoardDto {
         this.content = content;
         this.writer = writer;
     }
-
-
 }
-//Getter Setter lombok 안쓴이유 -> 날짜 형식 때문에

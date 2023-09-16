@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body layout:fragment="content">
+<div id="content">
+  <h2 class="writing-header">게시물 읽기</h2>
+  <form action="" id="form" class="frm" th:object="${boardDto}">
+    <input type="hidden" th:field="*{bno}" readonly>
+    <input type="hidden" th:field="*{writer}" readonly>
+    <input type="text" th:field="*{title}" readonly>
+    <textarea class="content" th:field="*{content}" cols="30" rows="10" readonly></textarea>
+    <button type="button" id="modifyBtn" class="btn">수정</button>
+    <button type="button" id="removeBtn" class="btn">삭제</button>
+    <button type="button" id="listBtn" class="btn">목록</button>
+  </form>
+</div>
+<div id="commentList">
+    <!-- 댓글 목록이 여기에 동적으로 추가될 것입니다. -->
+</div>
+<form id="commentForm">
+    <input type="hidden" id="bno" th:value="${boardDto.bno}">
+    <input type="hidden" th:if="${loginUser!=null}" th:id="commenter" th:value="${loginUser.name}">
+    <input type="hidden" th:unless="${loginUser!=null}" th:id="commenter" th:value="'익명 사용자'">
+    <textarea class="comment" name="comment" id="comment" cols="30" rows="6" placeholder="댓글을 입력하세요"></textarea>
+    <button type="button" id="submitComment">댓글 등록</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#submitComment").click(function() {
+            var bno = $("#bno").val();
+            var commenter = $("#commenter").val()
+            var content = $("#comment").val();
+            var reg_date = "";
+            var comment = { "bno": bno,
+                            "commenter" : commenter,
+                            "content": content,
+                            "reg_date": reg_date};
+
+            $.ajax({
+                url: "/addComment",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(comment),
+                success: function(response) {
+                    if (response === "success") {
+                        // 댓글 등록 성공 시 처리
+                        alert("댓글이 등록되었습니다.");
+                        // 페이지 새로고침 또는 댓글 목록 갱신
+                    } else {
+                        alert("댓글 등록에 실패했습니다.");
+                    }
+                }
+            });
+        });
+    });
+
+    // 댓글 목록을 가져오는 함수
+    function fetchComments() {
+        $.ajax({
+            url: "/getComments",
+            type: "GET",
+            dataType: "json",
+            success: function(comments) {
+                // 댓글 목록을 표시할 요소를 가져옴
+                var commentList = $("#commentList");
+
+                // 댓글 목록을 초기화
+                commentList.empty();
+
+                // 댓글 목록을 반복하여 화면에 추가
+                comments.forEach(function(comment) {
+                    var commentHtml = `
+                    <div class="commentCreate">
+                        <table>
+                            <tr>
+                                <td style="width: 150px">${comment.commenter}</td><td style="width: 1000px">${comment.content}</td><td>${comment.reg_date}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                `;
+                    commentList.append(commentHtml);
+                });
+            }
+        });
+    }
+
+    // 페이지 로드 시 댓글 목록을 가져옴
+    $(document).ready(function() {
+        fetchComments();
+    });
+
+    function addCommentAndRefresh() {
+        var content = $("#content").val();
+        var comment = { "content": content };
+
+        $.ajax({
+            url: "/addComment",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(comment),
+            success: function(response) {
+                if (response === "success") {
+                    // 댓글 등록 성공 시 댓글 목록을 업데이트
+                    fetchComments();
+                    $("#content").val(""); // 입력 필드 초기화
+                } else {
+                    alert("댓글 등록에 실패했습니다.");
+                }
+            }
+        });
+    }
+</script>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+    document.addEventListener("DOMContentLoaded", function() {
+      const listBtn = document.getElementById("listBtn");
+      listBtn.addEventListener("click", function() {
+        location.href = /*[[@{/board/list}]]*/;
+      });
+
+      const removeBtn = document.getElementById("removeBtn");
+      removeBtn.addEventListener("click", function() {
+        if(!confirm("정말로 삭제하시겠습니까?")) return;
+        const form = document.getElementById("form");
+        form.setAttribute("action", /*[[@{/board/remove(page=${page}, pageSize=${pageSize})}]]*/);
+        form.setAttribute("method", "post");
+        form.submit();
+      });
+
+      const modifyBtn = document.getElementById("modifyBtn");
+      modifyBtn.addEventListener("click", function() {
+        location.href = /*[[@{/board/modify(bno=${boardDto.bno})}]]*/;
+      });
+    });
+  /*]]>*/
+</script>
+</body>
+</html>

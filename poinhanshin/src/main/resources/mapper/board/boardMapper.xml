@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.poinhanshin.mapper.board.BoardMapper">
     <select id="count" resultType="int">
-        SELECT count(*) FROM board
-    </select>
+    SELECT count(*) FROM board
+</select>
 
     <delete id="deleteAll">
         DELETE FROM board
@@ -14,7 +14,7 @@
         DELETE FROM board WHERE bno = #{bno}
     </delete>
 
-    <insert id="insert" parameterType="com.project.poinhanshin.domain.board.BoardDto">
+    <insert id="insert" parameterType="com.project.poinhanshin.domain.board.BoardDto" useGeneratedKeys="true" keyProperty="bno">
         INSERT INTO board
             (title, content, writer)
         VALUES
@@ -97,5 +97,4 @@
         SET comment_cnt = comment_cnt + #{cnt}
         WHERE bno = #{bno}
     </update>
-
 </mapper>
